@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="QuietSchema Studio 提供自由职业数据处理、Excel 自动化、SQL 支持、文件转换和报表数据准备服务。">
+  <title>QuietSchema Studio | 数据处理与自动化服务</title>
+  <link rel="alternate" hreflang="en" href="index.html">
+
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --surface-soft: #eef3f8;
+      --text: #172033;
+      --muted: #5f6b7a;
+      --line: #d9e1ea;
+      --accent: #285f8f;
+      --accent-dark: #1d466a;
+      --shadow: 0 18px 45px rgba(23, 32, 51, 0.08);
+      --radius: 18px;
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC",
+        ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max-width));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(246, 248, 251, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(217, 225, 234, 0.85);
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-weight: 750;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--accent), #5b8fbd);
+      font-size: 0.92rem;
+      font-weight: 800;
+      box-shadow: 0 8px 22px rgba(40, 95, 143, 0.25);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .language-switch {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--accent);
+      font-weight: 750;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .language-switch:hover {
+      background: var(--surface-soft);
+      color: var(--accent-dark);
+    }
+
+    .hero {
+      padding: 92px 0 70px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      color: var(--accent);
+      font-weight: 750;
+      font-size: 0.86rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 0;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: 22px;
+      font-size: clamp(2.7rem, 6vw, 5.2rem);
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      margin: 0 0 30px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 750;
+      border: 1px solid transparent;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 12px 26px rgba(40, 95, 143, 0.22);
+    }
+
+    .button-primary:hover {
+      background: var(--accent-dark);
+    }
+
+    .button-secondary {
+      background: var(--surface);
+      border-color: var(--line);
+      color: var(--text);
+    }
+
+    .hero-card {
+      background: linear-gradient(150deg, #1d466a, #2f76ad);
+      color: #ffffff;
+      padding: 34px;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card h2 {
+      margin-bottom: 14px;
+      font-size: 1.45rem;
+    }
+
+    .hero-card p {
+      margin: 0 0 18px;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .hero-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 11px;
+    }
+
+    .hero-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .hero-list li::before {
+      content: "✓";
+      flex: 0 0 auto;
+      font-weight: 800;
+    }
+
+    section {
+      padding: 74px 0;
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin-bottom: 34px;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 14px;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: 0 8px 24px rgba(23, 32, 51, 0.04);
+    }
+
+    .card-number {
+      display: inline-grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 18px;
+      border-radius: 11px;
+      background: var(--surface-soft);
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .process {
+      background: var(--surface-soft);
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .process-step {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .process-step strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.06rem;
+    }
+
+    .process-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .detail-panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 30px;
+    }
+
+    .detail-panel h3 {
+      margin-bottom: 12px;
+    }
+
+    .detail-panel p,
+    .detail-panel li {
+      color: var(--muted);
+    }
+
+    .detail-panel ul {
+      margin: 14px 0 0;
+      padding-left: 20px;
+    }
+
+    .contact {
+      padding-bottom: 96px;
+    }
+
+    .contact-panel {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 32px;
+      align-items: center;
+      padding: 42px;
+      border-radius: 24px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .contact-panel h2 {
+      margin-bottom: 12px;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .contact-panel p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .contact-box {
+      padding: 24px;
+      border-radius: 16px;
+      background: var(--surface-soft);
+    }
+
+    .contact-label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .contact-link {
+      color: var(--accent);
+      font-weight: 750;
+      word-break: break-word;
+    }
+
+    .notice {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    footer {
+      padding: 26px 0 34px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .contact-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .process-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(calc(100% - 28px), var(--max-width));
+      }
+
+      .nav {
+        min-height: 64px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .language-switch {
+        min-height: 36px;
+        padding: 0 12px;
+        font-size: 0.9rem;
+      }
+
+      .hero {
+        padding-top: 66px;
+      }
+
+      .grid,
+      .process-grid,
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card,
+      .detail-panel,
+      .hero-card,
+      .contact-panel {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="QuietSchema Studio 首页">
+        <span class="brand-mark">QS</span>
+        <span>QuietSchema Studio</span>
+      </a>
+
+      <nav class="nav-links" aria-label="主导航">
+        <a href="#services">服务</a>
+        <a href="#process">流程</a>
+        <a href="#terms">条款</a>
+        <a href="#contact">联系</a>
+      </nav>
+
+      <a class="language-switch" href="index.html" lang="en" aria-label="Switch to English">
+        English
+      </a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">自由职业数据服务</span>
+          <h1>实用的数据处理与自动化服务。</h1>
+          <p class="hero-copy">
+            QuietSchema Studio 为个人和小型企业提供自由职业数据处理与信息技术支持服务，
+            帮助客户清洗、整理、转换、验证数据，并实现日常数据流程自动化。
+          </p>
+
+          <div class="button-row">
+            <a class="button button-primary" href="#contact">咨询报价</a>
+            <a class="button button-secondary" href="#services">查看服务</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="服务概览">
+          <h2>常见项目支持</h2>
+          <p>适合范围清晰、可通过数字方式交付的小型项目。</p>
+          <ul class="hero-list">
+            <li>Excel 与表格数据清洗和格式整理</li>
+            <li>基于 Python 的文件处理自动化</li>
+            <li>CSV、Excel、JSON 和 Parquet 文件转换</li>
+            <li>SQL 查询与数据验证</li>
+            <li>报表和仪表板数据准备</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">服务内容</span>
+          <h2>专注解决日常数据工作中的实际问题。</h2>
+          <p>
+            服务内容会根据双方确认的项目范围进行调整。本站不销售实体商品，
+            也不销售标准化商业软件产品。
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <span class="card-number">01</span>
+            <h3>表格数据处理</h3>
+            <p>
+              清洗、格式整理、结构调整、合并和验证 Microsoft Excel 与 CSV 文件。
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-number">02</span>
+            <h3>Python 自动化</h3>
+            <p>
+              为重复性的文件处理、数据转换、报表生成和电子表格流程编写简单脚本。
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-number">03</span>
+            <h3>数据格式转换</h3>
+            <p>
+              在 Excel、CSV、JSON 和 Parquet 等常见结构化数据格式之间进行转换。
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-number">04</span>
+            <h3>SQL 支持</h3>
+            <p>
+              提供 SQL 查询、数据提取、结果验证及结构化数据集准备方面的支持。
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-number">05</span>
+            <h3>报表数据准备</h3>
+            <p>
+              为业务报表、仪表板和定期报告流程准备并检查底层数据。
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card-number">06</span>
+            <h3>定制数据任务</h3>
+            <p>
+              承接文件处理、数据清理、流程检查和实用技术支持等小型定制项目。
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="process" class="process">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">项目流程</span>
+          <h2>简单清晰的合作方式。</h2>
+          <p>
+            每个项目开始前，双方都会确认工作内容、期望输出、交付方式、价格和时间安排。
+          </p>
+        </div>
+
+        <div class="process-grid">
+          <article class="process-step">
+            <strong>1. 需求确认</strong>
+            <p>客户提供文件、具体需求以及期望得到的结果。</p>
+          </article>
+
+          <article class="process-step">
+            <strong>2. 报价</strong>
+            <p>开始工作前，双方确认项目价格和预计交付日期。</p>
+          </article>
+
+          <article class="process-step">
+            <strong>3. 数据处理</strong>
+            <p>按照约定完成数据处理、转换或自动化工作。</p>
+          </article>
+
+          <article class="process-step">
+            <strong>4. 数字交付</strong>
+            <p>通过电子邮件或双方约定的文件共享平台交付成果。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="terms">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">商业信息</span>
+          <h2>适用于数字服务的清晰条款。</h2>
+        </div>
+
+        <div class="details-grid">
+          <article class="detail-panel">
+            <h3>价格与付款</h3>
+            <p>
+              项目价格取决于工作范围、复杂程度、文件数量和交付要求。
+            </p>
+            <ul>
+              <li>项目开始前会提供报价。</li>
+              <li>可通过 PayPal 账单收取服务费用。</li>
+              <li>相关交易费用由 PayPal 按其规则处理。</li>
+            </ul>
+          </article>
+
+          <article class="detail-panel">
+            <h3>交付方式</h3>
+            <p>
+              所有服务均通过数字方式交付。一般交付时间为 2 至 7 个工作日，
+              具体取决于项目情况。
+            </p>
+            <ul>
+              <li>交付时间会在开始前确认。</li>
+              <li>大型或复杂项目可能需要单独制定时间安排。</li>
+              <li>本站不涉及实体商品运输。</li>
+            </ul>
+          </article>
+
+          <article class="detail-panel">
+            <h3>取消与退款</h3>
+            <p>
+              如果项目在工作开始前取消，可提供全额退款。
+            </p>
+            <ul>
+              <li>工作开始后，退款金额会根据已完成的工作量评估。</li>
+              <li>已经交付的定制数字成果通常不支持退款。</li>
+              <li>如果交付内容不符合双方确认的范围，可提供合理修改。</li>
+            </ul>
+          </article>
+
+          <article class="detail-panel">
+            <h3>数据处理</h3>
+            <p>
+              客户文件仅用于双方确认的服务，不会被故意分享给无关第三方。
+            </p>
+            <ul>
+              <li>客户应尽量删除不必要的个人信息或敏感数据。</li>
+              <li>文件保留和删除要求可在项目开始前单独确认。</li>
+              <li>如有保密要求，应在需求说明中明确提出。</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="contact-panel">
+          <div>
+            <span class="eyebrow">联系</span>
+            <h2>咨询数据处理项目。</h2>
+            <p>
+              请简要说明工作内容、文件类型、期望输出以及希望的交付日期。
+            </p>
+          </div>
+
+          <div class="contact-box">
+            <span class="contact-label">商业名称</span>
+            <strong>QuietSchema Studio</strong>
+
+            <br><br>
+
+            <span class="contact-label">联系邮箱</span>
+            <!-- 上传前请将下面的邮箱替换为真实联系邮箱。 -->
+            <a class="contact-link" href="mailto:xyc0079@vip.sina.com">
+              xyc0079@vip.sina.com
+            </a>
+
+            <p class="notice">
+              所有服务均远程提供，并通过数字方式交付。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <span>© 2026 QuietSchema Studio</span>
+      <span>数据处理与自动化服务</span>
+    </div>
+  </footer>
+</body>
+</html>
